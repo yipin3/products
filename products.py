@@ -3,17 +3,12 @@ import os # operating system
 # read file
 def read_file(file_name):
 	product = []
-	if os.path.isfile(file_name):  # 檢查檔案在不在
-		print('yeah!')
-		with open(file_name, 'r') as f:
+	with open(file_name, 'r') as f:
 			for line in f:
 				if '商品,價格' in line:
 					continue
 				name, price = line.strip().split(',')
 				product.append([name, price])
-		print(product)
-	else:
-		print('No File...')
 	return product
 
 # user input
@@ -39,7 +34,17 @@ def write_file(file_name, product):
 		for p in product:
 			f.write(p[0] + ',' + p[1] + '\n')
 
-product = read_file('product.csv')
-product = user_input(product)
-print_product(product)
-write_file('product.csv', product)
+
+def main():
+	file_name = 'product.csv'
+	if os.path.isfile(file_name):  # 檢查檔案在不在
+		product = read_file(file_name)
+		print('yeah!')
+	else:
+		print('No File...') 
+
+	product = user_input(product)
+	print_product(product)
+	write_file('product.csv', product)
+
+main()
